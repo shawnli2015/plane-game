@@ -4,12 +4,7 @@ class Background {
         this.canvasHeight = canvasHeight;
         this.stars = [];
         this.speed = 2;
-        this.isPortraitMode = false;
         this.initStars();
-    }
-
-    setPortraitMode(isPortrait) {
-        this.isPortraitMode = isPortrait;
     }
 
     initStars() {
@@ -24,23 +19,13 @@ class Background {
     }
 
     update() {
-        if (this.isPortraitMode) {
-            this.stars.forEach(star => {
-                star.y += star.speed * this.speed;
-                if (star.y > this.canvasHeight) {
-                    star.y = 0;
-                    star.x = Utils.random(0, this.canvasWidth);
-                }
-            });
-        } else {
-            this.stars.forEach(star => {
-                star.x -= star.speed * this.speed;
-                if (star.x < 0) {
-                    star.x = this.canvasWidth;
-                    star.y = Utils.random(0, this.canvasHeight);
-                }
-            });
-        }
+        this.stars.forEach(star => {
+            star.x -= star.speed * this.speed;
+            if (star.x < 0) {
+                star.x = this.canvasWidth;
+                star.y = Utils.random(0, this.canvasHeight);
+            }
+        });
     }
 
     draw(ctx) {

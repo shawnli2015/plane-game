@@ -11,35 +11,12 @@ class Enemy {
         this.health = 1;
         this.score = 10;
         this.color = '#ff4444';
-        this.isPortraitMode = false;
-    }
-
-    setPortraitMode(isPortrait) {
-        this.isPortraitMode = isPortrait;
-        if (isPortrait) {
-            this.width = 40;
-            this.height = 50;
-            this.x = Utils.random(0, this.canvasWidth - this.width);
-            this.y = -this.height;
-        } else {
-            this.width = 50;
-            this.height = 40;
-            this.x = this.canvasWidth;
-            this.y = Utils.random(0, this.canvasHeight - this.height);
-        }
     }
 
     update() {
-        if (this.isPortraitMode) {
-            this.y += this.speed;
-            if (this.y > this.canvasHeight) {
-                this.active = false;
-            }
-        } else {
-            this.x -= this.speed;
-            if (this.x + this.width < 0) {
-                this.active = false;
-            }
+        this.x -= this.speed;
+        if (this.x + this.width < 0) {
+            this.active = false;
         }
     }
 

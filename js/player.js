@@ -2,8 +2,8 @@ class Player {
     constructor(canvasWidth, canvasHeight) {
         this.width = 60;
         this.height = 40;
-        this.x = canvasWidth / 2 - this.width / 2;
-        this.y = canvasHeight - 100;
+        this.x = 50;
+        this.y = canvasHeight / 2 - this.height / 2;
         this.canvasWidth = canvasWidth;
         this.canvasHeight = canvasHeight;
         this.speed = 5;
@@ -14,65 +14,27 @@ class Player {
         this.color = '#4a90e2';
         this.touchX = 0;
         this.touchY = 0;
-        this.isPortraitMode = false;
-    }
-
-    setPortraitMode(isPortrait) {
-        this.isPortraitMode = isPortrait;
-        if (isPortrait) {
-            this.width = 40;
-            this.height = 60;
-            this.x = this.canvasWidth / 2 - this.width / 2;
-            this.y = this.canvasHeight - 100;
-        } else {
-            this.width = 60;
-            this.height = 40;
-            this.x = 50;
-            this.y = this.canvasHeight / 2 - this.height / 2;
-        }
     }
 
     update(keys) {
-        if (this.isPortraitMode) {
-            if (keys['ArrowUp'] || keys['KeyW']) {
-                this.y -= this.speed;
-            }
-            if (keys['ArrowDown'] || keys['KeyS']) {
-                this.y += this.speed;
-            }
-            if (keys['ArrowLeft'] || keys['KeyA']) {
-                this.x -= this.speed;
-            }
-            if (keys['ArrowRight'] || keys['KeyD']) {
-                this.x += this.speed;
-            }
+        if (keys['ArrowUp'] || keys['KeyW']) {
+            this.y -= this.speed;
+        }
+        if (keys['ArrowDown'] || keys['KeyS']) {
+            this.y += this.speed;
+        }
+        if (keys['ArrowLeft'] || keys['KeyA']) {
+            this.x -= this.speed;
+        }
+        if (keys['ArrowRight'] || keys['KeyD']) {
+            this.x += this.speed;
+        }
 
-            if (this.touchX !== 0) {
-                this.x += this.touchX * this.speed;
-            }
-            if (this.touchY !== 0) {
-                this.y += this.touchY * this.speed;
-            }
-        } else {
-            if (keys['ArrowUp'] || keys['KeyW']) {
-                this.y -= this.speed;
-            }
-            if (keys['ArrowDown'] || keys['KeyS']) {
-                this.y += this.speed;
-            }
-            if (keys['ArrowLeft'] || keys['KeyA']) {
-                this.x -= this.speed;
-            }
-            if (keys['ArrowRight'] || keys['KeyD']) {
-                this.x += this.speed;
-            }
-
-            if (this.touchX !== 0) {
-                this.x += this.touchX * this.speed;
-            }
-            if (this.touchY !== 0) {
-                this.y += this.touchY * this.speed;
-            }
+        if (this.touchX !== 0) {
+            this.x += this.touchX * this.speed;
+        }
+        if (this.touchY !== 0) {
+            this.y += this.touchY * this.speed;
         }
 
         this.x = Utils.clamp(this.x, 0, this.canvasWidth - this.width);
@@ -110,21 +72,12 @@ class Player {
     }
 
     shoot() {
-        if (this.isPortraitMode) {
-            return new Bullet(
-                this.x + this.width / 2 - 3,
-                this.y,
-                -8,
-                true
-            );
-        } else {
-            return new Bullet(
-                this.x + this.width,
-                this.y + this.height / 2 - 3,
-                8,
-                true
-            );
-        }
+        return new Bullet(
+            this.x + this.width,
+            this.y + this.height / 2 - 3,
+            8,
+            true
+        );
     }
 
     takeDamage() {
