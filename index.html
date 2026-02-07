@@ -58,7 +58,7 @@
                 const screenHeight = window.innerHeight;
                 
                 if (screenHeight > screenWidth) {
-                    const scale = Math.min(screenWidth / gameWidth, screenHeight / gameHeight) * 0.9;
+                    const scale = Math.min(screenWidth / gameHeight, screenHeight / gameWidth) * 0.9;
                     return scale;
                 } else {
                     const scale = Math.min(screenWidth / gameWidth, screenHeight / gameHeight) * 0.9;
