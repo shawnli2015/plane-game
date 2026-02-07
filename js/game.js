@@ -2,8 +2,8 @@ class Game {
     constructor() {
         this.canvas = document.getElementById('gameCanvas');
         this.ctx = this.canvas.getContext('2d');
-        this.canvas.width = 1000;
-        this.canvas.height = 600;
+        this.canvas.width = 1920;
+        this.canvas.height = 1080;
 
         this.score = 0;
         this.lives = 3;
