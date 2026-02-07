@@ -60,19 +60,13 @@
                 console.log('屏幕尺寸:', screenWidth, 'x', screenHeight);
                 console.log('游戏尺寸:', gameWidth, 'x', gameHeight);
                 
-                if (screenHeight > screenWidth) {
-                    const scale = Math.min(screenWidth / gameWidth, screenHeight / gameHeight) * 0.9;
-                    console.log('竖屏模式，旋转后游戏尺寸:', gameWidth, 'x', gameHeight);
-                    console.log('缩放比例:', scale, '计算: screenWidth/gameWidth, screenHeight/gameHeight');
-                    console.log('缩放计算:', screenWidth / gameWidth, screenHeight / gameHeight);
-                    return scale;
-                } else {
-                    const scale = Math.min(screenWidth / gameWidth, screenHeight / gameHeight) * 0.9;
-                    console.log('横屏模式，游戏尺寸:', gameWidth, 'x', gameHeight);
-                    console.log('缩放比例:', scale, '计算: screenWidth/gameWidth, screenHeight/gameHeight');
-                    console.log('缩放计算:', screenWidth / gameWidth, screenHeight / gameHeight);
-                    return scale;
-                }
+                const scaleX = screenWidth / gameWidth;
+                const scaleY = screenHeight / gameHeight;
+                const scale = Math.min(scaleX, scaleY) * 0.95;
+                
+                console.log('缩放比例:', scale, '计算: scaleX, scaleY');
+                console.log('缩放计算:', scaleX, scaleY);
+                return scale;
             } else {
                 return 1;
             }
@@ -88,7 +82,7 @@
                 orientationWarning.style.display = 'none';
                 gameContainer.style.display = 'block';
                 const scale = calculateScale();
-                gameContainer.style.transform = `scale(${scale}) rotate(90deg)`;
+                gameContainer.style.transform = `scale(${scale})`;
                 gameContainer.style.transformOrigin = 'center center';
                 if (touchControls) {
                     touchControls.style.display = 'flex';
