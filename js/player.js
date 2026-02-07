@@ -32,11 +32,9 @@ class Player {
 
         if (this.touchX !== 0) {
             this.x += this.touchX * this.speed;
-            this.touchX = 0;
         }
         if (this.touchY !== 0) {
             this.y += this.touchY * this.speed;
-            this.touchY = 0;
         }
 
         this.x = Utils.clamp(this.x, 0, this.canvasWidth - this.width);

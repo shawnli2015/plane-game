@@ -63,16 +63,20 @@ class Game {
 
         let touchStartX = 0;
         let touchStartY = 0;
+        let isTouching = false;
 
         touchMoveArea.addEventListener('touchstart', (e) => {
             e.preventDefault();
             const touch = e.touches[0];
             touchStartX = touch.clientX;
             touchStartY = touch.clientY;
+            isTouching = true;
         });
 
         touchMoveArea.addEventListener('touchmove', (e) => {
             e.preventDefault();
+            if (!isTouching || !this.player) return;
+
             const touch = e.touches[0];
             const deltaX = touch.clientX - touchStartX;
             const deltaY = touch.clientY - touchStartY;
@@ -80,17 +84,38 @@ class Game {
             const maxDistance = 50;
             const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
             
+            let clampedDeltaX = deltaX;
+            let clampedDeltaY = deltaY;
+
             if (distance > maxDistance) {
                 const angle = Math.atan2(deltaY, deltaX);
-                this.player.touchX = Math.cos(angle);
-                this.player.touchY = Math.sin(angle);
+                clampedDeltaX = Math.cos(angle) * maxDistance;
+                clampedDeltaY = Math.sin(angle) * maxDistance;
             }
 
-            joystickHandle.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+            this.player.touchX = clampedDeltaX / maxDistance;
+            this.player.touchY = clampedDeltaY / maxDistance;
+
+            joystickHandle.style.transform = `translate(${clampedDeltaX}px, ${clampedDeltaY}px)`;
         });
 
         touchMoveArea.addEventListener('touchend', (e) => {
             e.preventDefault();
+            isTouching = false;
+            if (this.player) {
+                this.player.touchX = 0;
+                this.player.touchY = 0;
+            }
+            joystickHandle.style.transform = 'translate(0px, 0px)';
+        });
+
+        touchMoveArea.addEventListener('touchcancel', (e) => {
+            e.preventDefault();
+            isTouching = false;
+            if (this.player) {
+                this.player.touchX = 0;
+                this.player.touchY = 0;
+            }
             joystickHandle.style.transform = 'translate(0px, 0px)';
         });
 
@@ -99,6 +124,10 @@ class Game {
             if (this.gameState === 'playing') {
                 this.shoot();
             }
+        });
+
+        touchShootBtn.addEventListener('touchend', (e) => {
+            e.preventDefault();
         });
     }
 

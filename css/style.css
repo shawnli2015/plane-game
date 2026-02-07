@@ -114,13 +114,14 @@ body {
 }
 
 .touch-move-area {
-    width: 150px;
-    height: 150px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 2px solid rgba(255, 255, 255, 0.3);
+    width: 180px;
+    height: 180px;
+    background: rgba(255, 255, 255, 0.15);
+    border: 3px solid rgba(74, 144, 226, 0.6);
     border-radius: 50%;
     position: relative;
     touch-action: none;
+    box-shadow: 0 0 20px rgba(74, 144, 226, 0.3);
 }
 
 .touch-joystick {
@@ -133,13 +134,14 @@ body {
 }
 
 .touch-joystick-handle {
-    width: 60px;
-    height: 60px;
-    background: rgba(74, 144, 226, 0.8);
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
     border-radius: 50%;
     position: absolute;
-    box-shadow: 0 0 10px rgba(74, 144, 226, 0.5);
-    transition: transform 0.1s ease;
+    box-shadow: 0 0 15px rgba(74, 144, 226, 0.6), inset 0 2px 5px rgba(255, 255, 255, 0.3);
+    transition: transform 0.05s ease;
+    border: 2px solid rgba(255, 255, 255, 0.5);
 }
 
 .touch-shoot-area {
@@ -148,22 +150,23 @@ body {
 }
 
 .touch-shoot-btn {
-    width: 80px;
-    height: 80px;
+    width: 100px;
+    height: 100px;
     background: linear-gradient(135deg, #ff4444 0%, #cc0000 100%);
     border: none;
-    border-radius: 10px;
+    border-radius: 15px;
     color: #fff;
-    font-size: 20px;
+    font-size: 24px;
     font-weight: bold;
     cursor: pointer;
-    box-shadow: 0 4px 15px rgba(255, 68, 68, 0.4);
-    transition: all 0.2s ease;
+    box-shadow: 0 6px 20px rgba(255, 68, 68, 0.5), inset 0 2px 5px rgba(255, 255, 255, 0.3);
+    transition: all 0.15s ease;
+    border: 2px solid rgba(255, 255, 255, 0.5);
 }
 
 .touch-shoot-btn:active {
-    transform: scale(0.95);
-    box-shadow: 0 2px 10px rgba(255, 68, 68, 0.6);
+    transform: scale(0.92);
+    box-shadow: 0 3px 15px rgba(255, 68, 68, 0.7), inset 0 2px 5px rgba(255, 255, 255, 0.3);
 }
 
 @media (min-width: 768px) {
