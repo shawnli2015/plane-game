@@ -49,20 +49,31 @@
         function checkOrientation() {
             const orientationWarning = document.getElementById('orientationWarning');
             const gameContainer = document.querySelector('.game-container');
+            const touchControls = document.getElementById('touchControls');
             
             if (window.innerHeight > window.innerWidth) {
                 orientationWarning.style.display = 'flex';
                 gameContainer.style.display = 'none';
+                if (touchControls) {
+                    touchControls.style.display = 'none';
+                }
             } else {
                 orientationWarning.style.display = 'none';
                 gameContainer.style.display = 'block';
+                if (touchControls) {
+                    touchControls.style.display = 'flex';
+                }
             }
         }
 
         window.addEventListener('resize', checkOrientation);
         window.addEventListener('orientationchange', checkOrientation);
         
-        document.addEventListener('DOMContentLoaded', checkOrientation);
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(checkOrientation, 100);
+        });
+        
+        window.addEventListener('load', checkOrientation);
     </script>
 
     <script src="js/utils.js"></script>
