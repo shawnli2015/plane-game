@@ -30,6 +30,8 @@ class Game {
         this.autoShootTimer = 0;
         this.autoShootInterval = 10;
 
+        this.isPortraitMode = false;
+
         this.init();
     }
 
@@ -169,6 +171,11 @@ class Game {
         this.enemySpawnTimer = 0;
         this.segmentTimer = 0;
         this.segmentCount = 0;
+        
+        this.isPortraitMode = window.isPortraitMode || false;
+        this.player.setPortraitMode(this.isPortraitMode);
+        this.background.setPortraitMode(this.isPortraitMode);
+        
         this.updateUI();
         document.getElementById('startScreen').classList.add('hidden');
         document.getElementById('gameOverScreen').classList.add('hidden');
@@ -186,11 +193,14 @@ class Game {
     }
 
     spawnEnemy() {
-        this.enemies.push(new Enemy(this.canvas.width, this.canvas.height));
+        const enemy = new Enemy(this.canvas.width, this.canvas.height);
+        enemy.setPortraitMode(this.isPortraitMode);
+        this.enemies.push(enemy);
     }
 
     spawnBoss() {
         this.boss = new Boss(this.canvas.width, this.canvas.height);
+        this.boss.setPortraitMode(this.isPortraitMode);
     }
 
     update() {

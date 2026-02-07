@@ -19,29 +19,68 @@ class Boss {
         this.enteredScreen = false;
         this.minX = this.canvasWidth - this.width - 200;
         this.maxX = this.canvasWidth - this.width - 50;
+        this.isPortraitMode = false;
+    }
+
+    setPortraitMode(isPortrait) {
+        this.isPortraitMode = isPortrait;
+        if (isPortrait) {
+            this.width = 80;
+            this.height = 120;
+            this.x = this.canvasWidth / 2 - this.width / 2;
+            this.y = -this.height;
+            this.minY = 50;
+            this.maxY = this.canvasHeight - this.height - 50;
+            this.minX = 50;
+            this.maxX = this.canvasWidth - this.width - 50;
+        } else {
+            this.width = 120;
+            this.height = 80;
+            this.x = this.canvasWidth;
+            this.y = this.canvasHeight / 2 - this.height / 2;
+            this.minX = this.canvasWidth - this.width - 200;
+            this.maxX = this.canvasWidth - this.width - 50;
+        }
     }
 
     update() {
-        if (!this.enteredScreen) {
-            this.x -= this.speed;
-            if (this.x <= this.maxX) {
-                this.enteredScreen = true;
+        if (this.isPortraitMode) {
+            if (!this.enteredScreen) {
+                this.y += this.speed;
+                if (this.y >= this.maxY) {
+                    this.enteredScreen = true;
+                }
+            } else {
+                this.x += this.speed * this.horizontalDirection;
+                
+                if (this.x <= this.minX) {
+                    this.horizontalDirection = 1;
+                } else if (this.x >= this.maxX) {
+                    this.horizontalDirection = -1;
+                }
             }
         } else {
-            this.x += this.speed * this.horizontalDirection;
-            
-            if (this.x <= this.minX) {
-                this.horizontalDirection = 1;
-            } else if (this.x >= this.maxX) {
-                this.horizontalDirection = -1;
-            }
+            if (!this.enteredScreen) {
+                this.x -= this.speed;
+                if (this.x <= this.maxX) {
+                    this.enteredScreen = true;
+                }
+            } else {
+                this.x += this.speed * this.horizontalDirection;
+                
+                if (this.x <= this.minX) {
+                    this.horizontalDirection = 1;
+                } else if (this.x >= this.maxX) {
+                    this.horizontalDirection = -1;
+                }
 
-            this.y += this.speed * this.moveDirection * 0.5;
-            
-            if (this.y <= 50) {
-                this.moveDirection = 1;
-            } else if (this.y >= this.canvasHeight - this.height - 50) {
-                this.moveDirection = -1;
+                this.y += this.speed * this.moveDirection * 0.5;
+                
+                if (this.y <= 50) {
+                    this.moveDirection = 1;
+                } else if (this.y >= this.canvasHeight - this.height - 50) {
+                    this.moveDirection = -1;
+                }
             }
         }
 
@@ -87,12 +126,21 @@ class Boss {
     shoot() {
         if (this.shootTimer >= this.shootInterval) {
             this.shootTimer = 0;
-            return new Bullet(
-                this.x,
-                this.y + this.height / 2 - 3,
-                5,
-                false
-            );
+            if (this.isPortraitMode) {
+                return new Bullet(
+                    this.x + this.width / 2 - 3,
+                    this.y + this.height,
+                    5,
+                    false
+                );
+            } else {
+                return new Bullet(
+                    this.x,
+                    this.y + this.height / 2 - 3,
+                    5,
+                    false
+                );
+            }
         }
         return null;
     }
