@@ -57,11 +57,20 @@
                 const screenWidth = window.innerWidth;
                 const screenHeight = window.innerHeight;
                 
+                console.log('屏幕尺寸:', screenWidth, 'x', screenHeight);
+                console.log('游戏尺寸:', gameWidth, 'x', gameHeight);
+                
                 if (screenHeight > screenWidth) {
-                    const scale = Math.min(screenWidth / gameHeight, screenHeight / gameWidth) * 0.9;
+                    const scale = Math.min(screenWidth / gameWidth, screenHeight / gameHeight) * 0.9;
+                    console.log('竖屏模式，旋转后游戏尺寸:', gameWidth, 'x', gameHeight);
+                    console.log('缩放比例:', scale, '计算: screenWidth/gameWidth, screenHeight/gameHeight');
+                    console.log('缩放计算:', screenWidth / gameWidth, screenHeight / gameHeight);
                     return scale;
                 } else {
                     const scale = Math.min(screenWidth / gameWidth, screenHeight / gameHeight) * 0.9;
+                    console.log('横屏模式，游戏尺寸:', gameWidth, 'x', gameHeight);
+                    console.log('缩放比例:', scale, '计算: screenWidth/gameWidth, screenHeight/gameHeight');
+                    console.log('缩放计算:', screenWidth / gameWidth, screenHeight / gameHeight);
                     return scale;
                 }
             } else {
