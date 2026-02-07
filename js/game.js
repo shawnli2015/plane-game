@@ -24,6 +24,12 @@ class Game {
         this.segmentCount = 0;
         this.maxSegments = 5;
 
+        this.isShooting = false;
+        this.shootHoldTimer = 0;
+        this.shootHoldThreshold = 30;
+        this.autoShootTimer = 0;
+        this.autoShootInterval = 10;
+
         this.init();
     }
 
@@ -37,12 +43,21 @@ class Game {
         document.addEventListener('keydown', (e) => {
             this.keys[e.code] = true;
             if (e.code === 'Space' && this.gameState === 'playing') {
-                this.shoot();
+                if (!this.isShooting) {
+                    this.isShooting = true;
+                    this.shootHoldTimer = 0;
+                    this.shoot();
+                }
             }
         });
 
         document.addEventListener('keyup', (e) => {
             this.keys[e.code] = false;
+            if (e.code === 'Space') {
+                this.isShooting = false;
+                this.shootHoldTimer = 0;
+                this.autoShootTimer = 0;
+            }
         });
 
         document.getElementById('startBtn').addEventListener('click', () => {
@@ -121,13 +136,25 @@ class Game {
 
         touchShootBtn.addEventListener('touchstart', (e) => {
             e.preventDefault();
-            if (this.gameState === 'playing') {
+            if (this.gameState === 'playing' && !this.isShooting) {
+                this.isShooting = true;
+                this.shootHoldTimer = 0;
                 this.shoot();
             }
         });
 
         touchShootBtn.addEventListener('touchend', (e) => {
             e.preventDefault();
+            this.isShooting = false;
+            this.shootHoldTimer = 0;
+            this.autoShootTimer = 0;
+        });
+
+        touchShootBtn.addEventListener('touchcancel', (e) => {
+            e.preventDefault();
+            this.isShooting = false;
+            this.shootHoldTimer = 0;
+            this.autoShootTimer = 0;
         });
     }
 
@@ -171,6 +198,17 @@ class Game {
 
         this.background.update();
         this.player.update(this.keys);
+
+        if (this.isShooting) {
+            this.shootHoldTimer++;
+            if (this.shootHoldTimer >= this.shootHoldThreshold) {
+                this.autoShootTimer++;
+                if (this.autoShootTimer >= this.autoShootInterval) {
+                    this.shoot();
+                    this.autoShootTimer = 0;
+                }
+            }
+        }
 
         if (!this.boss) {
             this.enemySpawnTimer++;
