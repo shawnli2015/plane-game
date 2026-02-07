@@ -71,9 +71,12 @@
         
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(checkOrientation, 100);
+            setTimeout(checkOrientation, 500);
         });
         
         window.addEventListener('load', checkOrientation);
+        
+        setInterval(checkOrientation, 1000);
     </script>
 
     <script src="js/utils.js"></script>
