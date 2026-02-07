@@ -2,11 +2,18 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>飞机游戏</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <div id="orientationWarning" class="orientation-warning">
+        <div class="orientation-content">
+            <div class="rotate-icon">↻</div>
+            <h2>请旋转设备</h2>
+            <p>此游戏需要横屏模式才能获得最佳体验</p>
+        </div>
+    </div>
     <div class="game-container">
         <canvas id="gameCanvas"></canvas>
         <div id="ui">
@@ -37,6 +44,26 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function checkOrientation() {
+            const orientationWarning = document.getElementById('orientationWarning');
+            const gameContainer = document.querySelector('.game-container');
+            
+            if (window.innerHeight > window.innerWidth) {
+                orientationWarning.style.display = 'flex';
+                gameContainer.style.display = 'none';
+            } else {
+                orientationWarning.style.display = 'none';
+                gameContainer.style.display = 'block';
+            }
+        }
+
+        window.addEventListener('resize', checkOrientation);
+        window.addEventListener('orientationchange', checkOrientation);
+        
+        document.addEventListener('DOMContentLoaded', checkOrientation);
+    </script>
 
     <script src="js/utils.js"></script>
     <script src="js/collision.js"></script>
