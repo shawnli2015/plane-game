@@ -226,7 +226,7 @@ body {
     }
 }
 
-@media (max-width: 767px) and (orientation: portrait) {
+@media (max-width: 1024px) and (orientation: portrait) {
     .touch-controls {
         display: flex !important;
         position: fixed;
@@ -270,7 +270,7 @@ body {
     }
 }
 
-@media (max-width: 767px) and (orientation: landscape) {
+@media (max-width: 1024px) and (orientation: landscape) {
     .touch-controls {
         display: flex !important;
         position: fixed;

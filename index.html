@@ -82,7 +82,7 @@
                 orientationWarning.style.display = 'none';
                 gameContainer.style.display = 'block';
                 const scale = calculateScale();
-                gameContainer.style.transform = `scale(${scale})`;
+                gameContainer.style.transform = `scale(${scale}) rotate(90deg)`;
                 gameContainer.style.transformOrigin = 'center center';
                 if (touchControls) {
                     touchControls.style.display = 'flex';
